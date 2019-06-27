@@ -1,0 +1,30 @@
+{
+  "name": "shadowbot",
+  "version": "0.0.1",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Levelleor/shadowbot.git"
+  },
+  "contributors": [
+    {
+      "name": "Teliøn#6791"
+    },
+    {
+      "name": "Samsamson33#0913"
+    }
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Levelleor/shadowbot/issues"
+  },
+  "homepage": "https://github.com/Levelleor/shadowbot#readme",
+  "dependencies": {
+    "discord.js": "^11.5.1"
+  }
+}
