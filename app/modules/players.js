@@ -19,8 +19,8 @@ class Players {
   }
   add(id) {
     this.list.push({
-      lid: this.localid, 
-      id: id.toString(), 
+      lid: this.localid,
+      id: id.toString(),
       obj: new Player(this.localid)
     });
     this.localid++;

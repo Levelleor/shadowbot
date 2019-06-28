@@ -170,7 +170,7 @@ const LABYRINTH = [
       uses: [
         {
           item: "lamp",
-          result: "You finally collect all your will and break the shadow grip. The only weapon you have, it's in your hand. You throw the lantern directly in the shadow. It breaks, the fire spreads around it. Shadow, it's burning, it can't handle this light. When shadow melted in light you finally felt released. You examined the place where shadow dissapeared and found some dark essense. The essense started moving in your direction. Finally it touched you and got absorbed with your body. You don't feel any different but scared of what that might do to you in future.", 
+          result: "You finally collect all your will and break the shadow grip. The only weapon you have, it's in your hand. You throw the lantern directly in the shadow. It breaks, the fire spreads around it. Shadow, it's burning, it can't handle the light. When shadow melted in light you finally felt release. You examined the place where shadow dissapeared and found some dark essense. The essense started moving in your direction. Finally it touched you and got absorbed within your body. You don't feel any different but scared of what that might do to you in future.", 
           rewardType: "action",
           reward: "Used lamp /7-3",
           locked: "action",
@@ -274,7 +274,16 @@ const LABYRINTH = [
         action: function(player) {
           player.addeq(["compass", "lamp"]);
         }
-      }
+      },
+      interactions: [
+        {
+          item: "lever",
+          result: "You drag the lever.",
+          repeat: true,
+          rewardType: "action",
+          reward: "Used lever /6-4"
+        }
+      ]
     },
     { // 6 5
       

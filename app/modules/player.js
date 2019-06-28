@@ -15,7 +15,9 @@ class Player {
     this.lookedaround.bind(this);
     this.alreadylookedaround.bind(this);
     this.move.bind(this);
+    this.hasAction.bind(this);
     this.addAction.bind(this);
+    this.removeAction.bind(this);
     console.log("New player added: #"+id);
   }
   addeq(eq) { //eq[] - array!
@@ -37,8 +39,43 @@ class Player {
     if(to === "east") this.position[1] += 1;
     console.log("player#"+this.id+" location is: ["+this.position[0]+","+this.position[1]+"]");
   }
-  addAction(action) { //action - not an array!
-    this.actions.push(action);
+  hasAction(act) {
+    let i = this.actions.indexOf(act) > -1;
+    if (i > -1)
+      return i;
+    return false;
+  }
+  addAction(act) {
+    if (Array.isArray(act)) {
+      act.forEach(a => {
+        //if exists remove action
+        if (this.hasAction(a))
+          this.removeAction(a);
+        //if does not exist add action
+        else 
+          this.actions.push(a);
+      });
+    } else {
+      //if exists remove action
+      if (this.hasAction(act))
+        this.removeAction(act);
+      //if does not exist add action
+      else 
+        this.actions.push(act);
+    }
+  }
+  removeAction(act) {
+    if (Array.isArray(act)) {
+      act.forEach(a => {
+        let index = this.hasAction(a);
+        if (index > -1)
+          this.actions.splice(index, 1);
+      });
+    } else {
+      let index = this.hasAction(act);
+      if (index > -1)
+        this.actions.splice(index, 1);
+    }
   }
   scared(name) {
     this.scares.push(name);

@@ -84,7 +84,7 @@ async function play(usr, mods) {
     //interact
     if (location.hasOwnProperty('interactions')) {
       location.interactions.forEach(i => {
-        actions += ' - \`interact ' + i.name + '\`\n';
+        actions += ' - \`interact ' + i.item + '\`\n';
       });
     }
 
@@ -98,7 +98,7 @@ async function play(usr, mods) {
     if (location.hasOwnProperty('img')) {
       image = "./assets/img/dungeon/" + location.img;
     }
-
+    
     let embed = {
       "title": "⚔ Labyrinth",
       "description": location.description,
@@ -139,7 +139,6 @@ client.on('ready', () => {
 client.on('message', message=> {
   (async function() {
     if (message.author.bot === true) return;
-    //if (message.guild === null) message.reply('hey');
 
     //if (message.channel.id !== "499278926959345669") return;
 
@@ -182,7 +181,7 @@ client.on('message', message => {
 
   if (command.args && !args.length) {
     let reply = `You didn't provide any arguments, ${message.author}!`;
-
+    
     if (command.usage) {
       reply += `\nThe proper usage would be: \`${prefix}${command.name} ${command.usage}\``;
     }
@@ -193,35 +192,38 @@ client.on('message', message => {
     cooldowns.set(command.name, new Discord.Collection());
   }
 
-  const now = Date.now();
-  const timestamps = cooldowns.get(command.name);
-  const cooldownAmount = (command.cooldown || 3) * 1000;
+  //if not admin set cooldown
+  if(message.author.id != 115961932598476800) {
 
-  if (!timestamps.has(message.author.id)) {
-    if(message.author.id != 115961932598476800) {
-      timestamps.set(message.author.id, now);
-      setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
-    }
-  }
-  else {
-    const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
+    const now = Date.now();
+    const timestamps = cooldowns.get(command.name);
+    const cooldownAmount = (command.cooldown || 3) * 1000;
 
-    if (now < expirationTime) {
-        const timeLeft = (expirationTime - now) / 1000;
-        return message.reply(`please wait ${timeLeft.toFixed(1)} more second(s) before reusing the \`${command.name}\` command.`);
+    if (!timestamps.has(message.author.id)) {
+        timestamps.set(message.author.id, now);
+        setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
+    }
+    else {
+      const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
+
+      if (now < expirationTime) {
+          const timeLeft = (expirationTime - now) / 1000;
+          return message.reply(`please wait ${timeLeft.toFixed(1)} more second(s) before reusing the \`${command.name}\` command.`);
+      }
+
+      if(message.author.id != 115961932598476800) {
+        timestamps.set(message.author.id, now);
+        setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
+      }
     }
 
-    if(message.author.id != 115961932598476800) {
-      timestamps.set(message.author.id, now);
-      setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
-    }
   }
 
   try {
 
     let mods = command.execute(message, args, players);
     play(message.author, mods);
-
+    
   }
   catch (error) {
     console.error(error);
